@@ -1,0 +1,9 @@
+
+Users
+
+User->filter("key", value)
+User->filter("key", value, operator)
+User->filter([key=>value, key2=>value2])
+User->filter([key=>value, key2=>value2], "AND")
+User->filter([key=>value, key2=>value2], "OR")
+User->filter([key=>value, key2=>value2], "OR", limit, offset)
