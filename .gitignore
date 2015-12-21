@@ -1,2 +1,3 @@
 *.DS_Store
 app/composer/*
+app/Private.php
