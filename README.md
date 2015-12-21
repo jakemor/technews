@@ -1,7 +1,6 @@
-# apiPHP
+# Tech News
 
-A framework for writing APIs rapidly on a LAMP stack.
-
+A list of trending posts in tech, powered [unofficially] by the folks at usepanda.com.
 
 
 # TODO
