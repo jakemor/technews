@@ -11,7 +11,7 @@ ssh -N -L 8888:127.0.0.1:80 -i key.pem bitnami@IP
 
 
 // MARK: App
-require_once 'Engine.php';
+require_once __DIR__ . '/Engine.php';
 
 
 class App extends Engine {

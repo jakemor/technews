@@ -3,7 +3,7 @@
 // created by Jake Mor on Oct. 12, 2015
 
 // MARK: datastore 
-require_once 'Interfaces.php';
+require_once __DIR__ . '/Interfaces.php';
 
 class Datastore implements DatabaseManager {
 	// MARK: actually needed
@@ -11,8 +11,7 @@ class Datastore implements DatabaseManager {
 
 	public function __construct() {
 		//$db = new SQLite30('database.db');
-		$sql_user = "";
-		$sql_pass = "";
+		require_once __DIR__ . '/Private.php';
 
 		$dsn = 'mysql:host=localhost;port=3306;dbname=thenews';
 

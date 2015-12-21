@@ -1,9 +1,9 @@
 <?php
 
 
-require_once 'Response.php';
-require_once 'Datastore.php';
-require_once 'Assert.php';
+require_once __DIR__ . '/Response.php';
+require_once __DIR__ . '/Datastore.php';
+require_once __DIR__ . '/Assert.php';
 
 class Engine {
 

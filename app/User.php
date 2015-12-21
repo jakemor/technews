@@ -4,8 +4,8 @@
 
 // MARK: Controller
 
-require_once 'Token.php';
-require_once 'Crud.php';
+require_once __DIR__ . '/Token.php';
+require_once __DIR__ . '/Crud.php';
 
 class User extends Crud implements JsonSerializable, CrudExtendable {
 
