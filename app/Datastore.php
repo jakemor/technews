@@ -13,7 +13,7 @@ class Datastore implements DatabaseManager {
 		//$db = new SQLite30('database.db');
 		require_once __DIR__ . '/Private.php';
 
-		$dsn = 'mysql:host=localhost;port=3306;dbname=thenews';
+		$dsn = 'mysql:host=localhost;port=3306;dbname=technews';
 
 		$options = array(
 			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
@@ -42,7 +42,7 @@ class Datastore implements DatabaseManager {
 
 		$vals = implode(", ", $colValues);
 
-		$sql = "INSERT INTO `thenews`.`{$table}` ({$cols}) VALUES ({$vals})";
+		$sql = "INSERT INTO `technews`.`{$table}` ({$cols}) VALUES ({$vals})";
 
 		try {
 			$this->db->exec($sql);
@@ -55,7 +55,7 @@ class Datastore implements DatabaseManager {
 	}
 
 	public function getRows($table, $args) {
-		$sql = "SELECT * FROM `thenews`.`{$table}` WHERE ";
+		$sql = "SELECT * FROM `technews`.`{$table}` WHERE ";
 
 		// multiple options
 		if (is_array($args[0])) {
@@ -121,7 +121,7 @@ class Datastore implements DatabaseManager {
 
 	public function updateRow($table, $row, $unique = "id") {
 
-		$sql = "UPDATE `thenews`.`{$table}` SET ";
+		$sql = "UPDATE `technews`.`{$table}` SET ";
 		
 		$id = $row[$unique]; 
 
@@ -148,7 +148,7 @@ class Datastore implements DatabaseManager {
 
 	public function deleteRowWithId($table, $uid) {
 
-		$sql = "DELETE FROM `thenews`.`{$table}` WHERE `id` = '{$uid}'"; // only id and hardcoded for safety
+		$sql = "DELETE FROM `technews`.`{$table}` WHERE `id` = '{$uid}'"; // only id and hardcoded for safety
 
 		try {
 			$result = $this->db->query($sql);
