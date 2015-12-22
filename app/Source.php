@@ -47,33 +47,21 @@ class Source extends Crud implements JsonSerializable, CrudExtendable {
 		$posts = []; 
 		
 		$vals =[]; 
-		$sum = 0; 
+		$sum = 0;
+		$rank = 1;
 		foreach ($panda_posts as $pp) {
 			$p = new Post($this->ds);
-			$p = $p->fromPandaPost($this, $pp);
+			$p = $p->fromPandaPost($this, $pp, $rank);
 			$p->source_name = $this->name;
 			$p->source_icon = $this->icon;
 			$sum += $p->likes;
 			array_push($vals, $p->likes);
 			array_push($posts, $p);
+			$rank++;
 		}
 
-		require_once "Stats.php";
-
-		$sdv = sd($vals);
-		$mean = $sum/sizeof($panda_posts);
-
-		$min = 0; 
-
 		foreach ($posts as $p) {
-			$p->popularity = ($p->likes-$mean)/$sdv;
-			$min = min($p->popularity, $min); 
-		}
-
-		$min = abs($min) + 1; 
-
-		foreach ($posts as $p) {
-			$p->popularity = ((($p->likes-$mean)/$sdv) + $min)*$this->popularity;
+			$p->popularity = $this->popularity/$p->rank;
 		}
 
 		return $posts; 

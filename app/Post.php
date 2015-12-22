@@ -25,12 +25,13 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 	public $popularity;
 	public $source_name;
 	public $source_icon;
+	public $rank;
 
 	/* 
 		MARK: functions
 	*/
 
-	public function fromPandaPost($source, $pp) {
+	public function fromPandaPost($source, $pp, $rank) {
 		$panda_id = $pp["uniqueid"];
 
 		$p = $this;
@@ -43,6 +44,7 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 		$p->panda_id = $panda_id;
 		$p->title = $pp["title"];
 		$p->likes = $pp["source"]["likesCount"];
+		$p->rank = $rank;
 		$p->img_big = $this->ds->escapeSQL($pp["image"]["big"]);
 		$p->img_normal = $this->ds->escapeSQL($pp["image"]["normal"]);
 		$p->img_small = $this->ds->escapeSQL($pp["image"]["small"]);
@@ -95,6 +97,7 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 			"img_big" => $this->img_big,
 			"img_normal" => $this->img_normal,
 			"img_small" => $this->img_small,
+			"rank" => $this->rank,
 		];
 	}
 
@@ -120,6 +123,7 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 			"popularity" => $this->popularity,
 			"source_name" => $this->source_name,
 			"source_icon" => $this->source_icon,
+			"rank" => $this->rank,
         ];
     }
 }
