@@ -109,6 +109,7 @@ class App extends Engine {
 	}
 
 	public function getPosts() {
+		header('Access-Control-Allow-Origin: *');
 		$this->response->shouldNotRespond();
 		$user = new User($this->ds);
 		$user = $user->withId("timestamp");
