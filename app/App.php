@@ -101,6 +101,60 @@ class App extends Engine {
 		$this->response->add("sources", $my_sources);
 	}
 
+
+	public function popularSources() {
+		$s = new Source($this->ds); 
+		$pop = $s->getPopularSources();
+		$this->response->add("sources", $pop);
+	}
+
+	public function getPosts() {
+		$this->response->shouldNotRespond();
+		$user = new User($this->ds);
+		$user = $user->withId("timestamp");
+		$past = intval($user->username);
+		$current = time();
+		
+		// only redownload sources if its been 20 min since last time
+		if ($current - $past > 1200) {
+			$user->username = time(); 
+			$user->save(); 
+
+			$s = new Source($this->ds); 
+			$pop = $s->getPopularSources();
+			
+			$all_posts = [];
+
+			foreach ($pop as $s) {
+				$posts = $s->getPosts();
+				$all_posts = array_merge($all_posts, $posts);
+			}
+
+			// TODO: only todays posts
+			// for ($i=0; $i < sizeof($all_posts); $i++) { 
+			// 	strtotime($all_posts[$i]["posted_at"])
+			// }
+
+			function cmp($a, $b) {
+				if ($a->popularity == $b->popularity) {
+					return 0;
+				}
+
+				return ($a->popularity > $b->popularity) ? -1 : 1;
+			}
+
+			usort($all_posts, "cmp");
+
+			$file = fopen("posts.json","w+");
+			fwrite($file,json_encode($all_posts));
+			fclose($file);
+		}
+
+		$myfile = fopen("posts.json", "r") or die("Unable to open file!");
+		echo fread($myfile,filesize("posts.json"));
+		fclose($myfile);
+	}
+
 	/* 
 		
 		MARK: private functions (not endpoints)

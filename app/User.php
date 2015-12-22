@@ -9,7 +9,7 @@ require_once __DIR__ . '/Crud.php';
 
 class User extends Crud implements JsonSerializable, CrudExtendable {
 
-	private $username;
+	public $username;
 	private $password;
 	private $first_name;
 	private $middle_name;
