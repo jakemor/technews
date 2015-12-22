@@ -56,7 +56,7 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 		}
 
 		$p->target_url = $this->ds->escapeSQL($pp["url"]["target"]);
-		$p->panda_url = $this->ds->escapeSQL($pp["url"]["panda"]);
+		$p->panda_url = $this->ds->escapeSQL($pp["url"]["source"]);
 		$p->description = $pp["description"];
 		$p->source_id = $source->id;
 		$p->posted_at = date("Y-m-d H:i:s", strtotime($pp["source"]["createdAt"]));
@@ -110,7 +110,7 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 			"comments" => $this->comments,
 			"iframe_support" => $this->iframe_support,
 			"target_url" => $this->target_url,
-			"panda_url" => $this->panda_url,
+			"source_url" => $this->panda_url,
 			"description" => $this->description,
 			"source_id" => $this->source_id,
 			"panda_id" => $this->panda_id,
