@@ -49,15 +49,19 @@ class Source extends Crud implements JsonSerializable, CrudExtendable {
 		$vals =[]; 
 		$sum = 0;
 		$rank = 1;
+		
 		foreach ($panda_posts as $pp) {
 			$p = new Post($this->ds);
 			$p = $p->fromPandaPost($this, $pp, $rank);
-			$p->source_name = $this->name;
-			$p->source_icon = $this->icon;
-			$sum += $p->likes;
-			array_push($vals, $p->likes);
-			array_push($posts, $p);
-			$rank++;
+			
+			if (strpos($p->title, "[ad]") === false) {
+				$p->source_name = $this->name;
+				$p->source_icon = $this->icon;
+				$sum += $p->likes;
+				array_push($vals, $p->likes);
+				array_push($posts, $p);
+				$rank++;
+			}
 		}
 
 		foreach ($posts as $p) {
