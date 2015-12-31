@@ -36,7 +36,7 @@ class Source extends Crud implements JsonSerializable, CrudExtendable {
 	}
 
 	public function getPopularSources() {
-		return $this->filter("`type` = 'news' AND `popularity` >= 1500 ORDER BY `popularity` DESC");
+		return $this->filter("`type` = 'news' AND `popular_endpoint` != '' AND `popularity` >= 1500 ORDER BY `popularity` DESC");
 	}
 
 	public function getPosts() {
