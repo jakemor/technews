@@ -36,18 +36,23 @@ class Source extends Crud implements JsonSerializable, CrudExtendable {
 	}
 
 	public function getPopularSources() {
-		return $this->filter("`type` = 'news' AND `popular_endpoint` != '' AND `popularity` >= 1500 AND `meta` LIKE '%votes%' ORDER BY `popularity` DESC");
+		return $this->filter("`type` = 'news' AND `popularity` >= 1500 ORDER BY `popularity` DESC");
 	}
 
 	public function getPosts() {
 		$url = $this->popular_endpoint;
+
+		if (is_null($url) || empty($url)) {
+			$url = $this->latest_endpoint;
+		}
+
 		$panda_posts = file_get_contents($url); 
 		$panda_posts = json_decode($panda_posts, true);
 
 		$posts = []; 
 		
 		$vals =[]; 
-		$sum = 0;
+		$sum = 1;
 		$rank = 1;
 
 		foreach ($panda_posts as $pp) {

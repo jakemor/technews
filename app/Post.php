@@ -43,9 +43,17 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 
 		$p->panda_id = $panda_id;
 		$p->title = $pp["title"];
-		$p->likes = $pp["source"]["likesCount"];
+		
+		if (array_key_exists("likesCount", $pp["source"])) {
+			$p->likes = $pp["source"]["likesCount"];
+		}
+
 		$p->rank = $rank;
-		$p->comments = $pp["source"]["commentsCount"];
+
+		if (array_key_exists("commentsCount", $pp["source"])) {
+			$p->comments = $pp["source"]["commentsCount"];
+		}
+		
 		$iframe = $pp["flags"]["iframe"]["supported"]; 
 
 		if ($iframe == 1) {
@@ -54,7 +62,15 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 			$p->iframe_support = 0;
 		}
 
-		$p->target_url = $this->ds->escapeSQL($pp["url"]["target"]);
+		$target = "";
+
+		if (array_key_exists("target", $pp["url"])) {
+			$target = $pp["url"]["target"];
+		} else {
+			$target = $pp["source"]["targetUrl"];
+		}
+
+		$p->target_url = $this->ds->escapeSQL($target);
 		$p->panda_url = $this->ds->escapeSQL($pp["source"]["sourceUrl"]);
 		$p->description = $pp["description"];
 		$p->source_id = $source->id;
@@ -66,7 +82,7 @@ class Post extends Crud implements JsonSerializable, CrudExtendable {
 		$options['thumbnail_max_width'] = 'false';      # scaled image width in pixels; Default no-scaling.
 		$options['viewport']  = "700x432";  # Max 5000x5000; Default 1280x1024
 
-		$src = $this->url2png_v6($pp["url"]["target"], $options);
+		$src = $this->url2png_v6($target, $options);
 
 		$p->img_big = $this->ds->escapeSQL($pp["image"]["big"]);
 		$p->img_normal = $this->ds->escapeSQL($src);
