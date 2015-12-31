@@ -81,6 +81,8 @@ class Datastore implements DatabaseManager {
 				$sql .= "LIMIT {$limit} ";
 				$sql .= "OFFSET {$offset};"; 
 			}
+
+			$sql .= " ORDER BY `created_at`";
 		// custom sql
 
 		} elseif (is_string($args[0]) && sizeof($args) == 1) {
@@ -94,20 +96,20 @@ class Datastore implements DatabaseManager {
 			$val = $args[1]; 
 			$val = $this->db->quote($val);
 			$sql .= "`{$key}` = {$val}";
-
+			$sql .= " ORDER BY `created_at`";
 		} elseif (is_string($args[0]) && sizeof($args) == 3) {
 			$key = $args[0];
 			$val = $args[1];
 			$operator = $args[2];
 			$val = $this->db->quote($val);
 			$sql .= "`{$key}` {$operator} {$val}";
-		
+			$sql .= " ORDER BY `created_at`";
 		} else {
 			trigger_error("Ivalid use of Users->filter()");
 			exit();
 		}
 
-		$sql .= " ORDER BY `created_at`";
+		
 
 		try {
 			$result = $this->db->query($sql);
